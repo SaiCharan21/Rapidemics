@@ -3,42 +3,31 @@ package app.patientocity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
     public static final String TAG1 = "TAG";
     public EditText email_id;
-    public EditText password_id;
+    public EditText password_id,full_name;
     FirebaseAuth mFirebaseAuth;
     TextView tvSignIn;
     Button signup;
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
     private static final String USERS = "users";
-    //    private String email,password;
     private String TAG = "RegisterActivity";
     FirebaseFirestore firebaseFirestore;
     String userID;
@@ -56,6 +45,7 @@ public class SignupActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         tvSignIn = findViewById(R.id.textView);
         email_id = findViewById(R.id.email);
+        full_name = findViewById(R.id.name);
         password_id = findViewById(R.id.pass);
         signup = findViewById(R.id.create);
 
@@ -67,6 +57,7 @@ public class SignupActivity extends AppCompatActivity {
         signup.setOnClickListener(v -> {
             final String email = email_id.getText().toString().trim();
             final String password = password_id.getText().toString().trim();
+            final String f_name  = full_name.getText().toString().trim();
 
             if (TextUtils.isEmpty(email)) {
                 email_id.setError("Email is Required");
@@ -78,6 +69,11 @@ public class SignupActivity extends AppCompatActivity {
                 return;
             }
 
+            if (TextUtils.isEmpty(f_name)) {
+                full_name.setError("Name is Required");
+                return;
+            }
+
             mFirebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     FirebaseUser rUser = mFirebaseAuth.getCurrentUser();
@@ -85,8 +81,8 @@ public class SignupActivity extends AppCompatActivity {
                     mDatabase = FirebaseDatabase.getInstance().getReference("Users").child(userId);
                     HashMap<String, String> hashMap = new HashMap<>();
                     hashMap.put("userId", userId);
+                    hashMap.put("name",f_name);
                     hashMap.put("email", email);
-                    //Sai is one
                     hashMap.put("password", password);
                     mDatabase.setValue(hashMap).addOnCompleteListener(task1 -> {
                         if (task1.isSuccessful()) {

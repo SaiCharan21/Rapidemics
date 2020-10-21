@@ -35,12 +35,12 @@ def ProbabilityOfC_Difficile(patient):
     lastTwo = updatedLog[0]+updatedLog[1]
     allSymptomsFound = updatedLog[:]
     symptomCount = 1
-    dick=getSymptom(patient)
-    for key in dick:
+    sy_rap=getSymptom(patient)
+    for key in sy_rap:
       if key<0:
-        updatedlog.remove(dick[key])
+        updatedlog.remove(sy_rap[key])
       else:
-        updatedlog.append(len(list(set(dick).intersection(updatedlog))))
+        updatedlog.append(len(list(set(sy_rap).intersection(updatedlog))))
     if lastTwo.count('watery diarrhea') >= 1 or ('abdominal tenderness' in allSymptomsFound or 'mild abdominal cramping' in allSymptomsFound):
         if lastTwo.count('watery diarrhea') >= 1 and ('abdominal tenderness' in allSymptomsFound or 'mild abdominal cramping' in allSymptomsFound):
             symptomCount += 1
@@ -56,12 +56,12 @@ def ProbabilityOfStaph(patient):
     lastTwo = updatedLog[0]+updatedLog[1]
     allSymptomsFound = updatedLog[:]
     symptomCount = 1
-    dick=getSymptom(patient)
-    for key in dick:
+    sy_rap=getSymptom(patient)
+    for key in sy_rap:
       if key<0:
-        updatedlog.remove(dick[key])
+        updatedlog.remove(sy_rap[key])
       else:
-        updatedlog.append(len(list(set(dick).intersection(updatedlog))))
+        updatedlog.append(len(list(set(sy_rap).intersection(updatedlog))))
     #there are 4 parts that staph infection can be depending on where the infection took place. These are skin, Food Poisoning, Toxic Shock, Septic arthritis.
     # we calculate these individually, then take the maximum probability of each to determine the final probability
 
@@ -97,23 +97,23 @@ def ProbabilityOfKlebsiella(patient):
     lastTwo = updatedLog[0]+updatedLog[1]
     allSymptomsFound = updatedLog[:]
     symptomCount = 1
-    dick=getSymptom(patient)
-    for key in dick:
+    sy_rap=getSymptom(patient)
+    for key in sy_rap:
       if key<0:
-        updatedlog.remove(dick[key])
+        updatedlog.remove(sy_rap[key])
       else:
-        updatedlog.append(len(list(set(dick).intersection(updatedlog))))
+        updatedlog.append(len(list(set(sy_rap).intersection(updatedlog))))
     return len(list(set(updatedlog).intersection(klebsiellasymptoms)))/6
 def ProbabilityOfE_Coli(patient):
     lastTwo = updatedLog[0]+updatedLog[1]
     allSymptomsFound = updatedLog[:]
     symptomCount = 1
-    dick=getSymptom(patient)
-    for key in dick:
+    sy_rap=getSymptom(patient)
+    for key in sy_rap:
       if key<0:
-        updatedlog.remove(dick[key])
+        updatedlog.remove(sy_rap[key])
       else:
-        updatedlog.append(len(list(set(dick).intersection(updatedlog))))
+        updatedlog.append(len(list(set(sy_rap).intersection(updatedlog))))
 
     pCount = 0
     for s in E_ColiSymptoms:
