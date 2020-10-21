@@ -88,6 +88,7 @@ public class SignupActivity extends AppCompatActivity {
                            HashMap<String,String> hashMap =new HashMap<>();
                            hashMap.put("userId",userId);
                            hashMap.put("email",email);
+                           //Sai is one
                            hashMap.put("password",password);
                            mDatabase.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                @Override
