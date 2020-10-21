@@ -50,7 +50,7 @@ public class addReports extends AppCompatActivity {
 
 
 
-        add = (Button) findViewById(R.id.create);
+        add = findViewById(R.id.create);
 
 
 

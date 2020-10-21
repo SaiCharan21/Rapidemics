@@ -54,8 +54,6 @@ public class update_delete extends AppCompatActivity {
         String key =  getIntent().getExtras().get("key").toString();
 
         ref= FirebaseDatabase.getInstance().getReference().child("patients");
-        key1 =(TextView) findViewById(R.id.key);
-        key1.setText(key);
 
         showAllUserData();
 

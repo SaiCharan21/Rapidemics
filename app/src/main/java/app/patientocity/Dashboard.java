@@ -47,11 +47,11 @@ public class Dashboard extends AppCompatActivity {
                     }
                     else if(finalI==2){
                         //change navigation to monitors page later
-                        Intent intent = new Intent(Dashboard.this,viewReports.class);
+                        Intent intent = new Intent(Dashboard.this,Profile.class);
                         startActivity(intent);
                     }
                     else if(finalI==3){
-                        Intent intent = new Intent(Dashboard.this,About.class);
+                        Intent intent = new Intent(Dashboard.this,WelcomeActivity.class);
                         startActivity(intent);
                     }
 //                    else if(finalI==4){
