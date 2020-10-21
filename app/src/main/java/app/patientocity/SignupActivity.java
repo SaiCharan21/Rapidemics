@@ -38,7 +38,7 @@ public class SignupActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
     private static final String USERS = "users";
-//    private String email,password;
+    //    private String email,password;
     private String TAG = "RegisterActivity";
     FirebaseFirestore firebaseFirestore;
     String userID;
@@ -54,69 +54,62 @@ public class SignupActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         mDatabase = database.getReference(USERS);
         mFirebaseAuth = FirebaseAuth.getInstance();
-        tvSignIn=findViewById(R.id.textView);
-        email_id=findViewById(R.id.email);
+        tvSignIn = findViewById(R.id.textView);
+        email_id = findViewById(R.id.email);
         password_id = findViewById(R.id.pass);
         signup = findViewById(R.id.create);
 
-        if(mFirebaseAuth.getCurrentUser()!=null){
-            startActivity(new Intent(getApplicationContext(),Dashboard.class));
+        if (mFirebaseAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), Dashboard.class));
             finish();
         }
         //
         signup.setOnClickListener(v -> {
-                final String email = email_id.getText().toString().trim();
-                final String password = password_id.getText().toString().trim();
+            final String email = email_id.getText().toString().trim();
+            final String password = password_id.getText().toString().trim();
 
-                if(TextUtils.isEmpty(email)){
-                    email_id.setError("Email is Required");
-                    return;
+            if (TextUtils.isEmpty(email)) {
+                email_id.setError("Email is Required");
+                return;
+            }
+
+            if (TextUtils.isEmpty(password)) {
+                password_id.setError("Password is Required");
+                return;
+            }
+
+            mFirebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    FirebaseUser rUser = mFirebaseAuth.getCurrentUser();
+                    String userId = rUser.getUid();
+                    mDatabase = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put("userId", userId);
+                    hashMap.put("email", email);
+                    //Sai is one
+                    hashMap.put("password", password);
+                    mDatabase.setValue(hashMap).addOnCompleteListener(task1 -> {
+                        if (task1.isSuccessful()) {
+                            Intent intent = new Intent(SignupActivity.this, Dashboard.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(SignupActivity.this, "Authentication Bad.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                } else {
+                    Toast.makeText(SignupActivity.this, "Authentication Bad.",
+                            Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), Dashboard.class));
                 }
-
-                if (TextUtils.isEmpty(password)){
-                    password_id.setError("Password is Required");
-                    return;
-                }
-
-               mFirebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                   @Override
-                   public void onComplete(@NonNull Task<AuthResult> task) {
-                       if(task.isSuccessful()){
-                           FirebaseUser rUser =mFirebaseAuth.getCurrentUser();
-                           String userId=rUser.getUid();
-                           mDatabase = FirebaseDatabase.getInstance().getReference("Users").child(userId);
-                           HashMap<String,String> hashMap =new HashMap<>();
-                           hashMap.put("userId",userId);
-                           hashMap.put("email",email);
-                           //Sai is one
-                           hashMap.put("password",password);
-                           mDatabase.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                               @Override
-                               public void onComplete(@NonNull Task<Void> task) {
-                                   if(task.isSuccessful()){
-                                       Intent intent= new Intent(SignupActivity.this, Dashboard.class);
-                                       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                       startActivity(intent);
-                                   }
-                                   else{
-                                       Toast.makeText(SignupActivity.this, "Authentication Bad.",
-                                               Toast.LENGTH_SHORT).show();
-                                   }
-                               }
-                           });
-
-                       }
-                       else{
-                           Toast.makeText(SignupActivity.this, "Authentication Bad.",
-                                   Toast.LENGTH_SHORT).show();
-                           startActivity(new Intent(getApplicationContext(),Dashboard.class));                       }
-                   }
-               });
+            });
 
         });
 
         tvSignIn.setOnClickListener(v -> {
-            Intent i = new Intent(SignupActivity.this,LoginActivity.class);
+            Intent i = new Intent(SignupActivity.this, LoginActivity.class);
             startActivity(i);
         });
     }

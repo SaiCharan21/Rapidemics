@@ -16,7 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-
 public class addReports extends AppCompatActivity {
 
     EditText name;
@@ -49,11 +48,7 @@ public class addReports extends AppCompatActivity {
 //        dis2 = (EditText) findViewById(R.id.dis2);
 
 
-
         add = findViewById(R.id.create);
-
-
-
 
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +71,7 @@ public class addReports extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(n)) {
             String id = db_patients.push().getKey();
-            patient p = new patient(id, n, s, d, r,dati);
+            patient p = new patient(id, n, s, d, r, dati);
             db_patients.child(id).setValue(p);
             db_patients.child(id).child("symptomsHistory").child(dati).setValue(s);
             name.setText("");
@@ -92,7 +87,6 @@ public class addReports extends AppCompatActivity {
             Toast.makeText(this, "Please enter a name, Doc", Toast.LENGTH_LONG).show();
         }
     }
-
 
 
 }
