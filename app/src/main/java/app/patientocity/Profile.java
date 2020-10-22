@@ -2,10 +2,13 @@ package app.patientocity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +27,10 @@ public class Profile extends AppCompatActivity {
     Button logout;
     ImageView imageView;
     TextView name, email, id;
+    private EditText searchField;
+    private ImageButton searchButton;
+
+    private RecyclerView recyclerView;
 
     private FirebaseUser user;
     private DatabaseReference reference;
@@ -40,6 +47,8 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         logout = findViewById(R.id.logoutbtnn);
+//        searchField =findViewById(R.id.search_field);
+//        searchButton=findViewById(R.id.imageButton2)
 
         imageView = findViewById(R.id.user_imageview);
         user = FirebaseAuth.getInstance().getCurrentUser();

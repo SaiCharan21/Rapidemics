@@ -22,7 +22,7 @@ We are proud to be able to make a tool that is useful in hospitals, potentially 
 We learned a lot of firebase tools and I feel a lot more equipped to work with servers in the future. We also learned a lot of Java, front-end and back-end. We also learned that repl.it is not the best for some of us with bad internet connections :)
 
 ## What's next for Rapidemics
-One of our group members did extensive research on medical information and has talked to real-life doctors. However, Rapedemics, right now, is only built by us, high schoolers; so the medical knowledge is not exactly very precise. A next step would be to further enhance the diagnosis steps in our project.
+One of our group members did extensive research on medical information and has talked to real-life doctors. However, Rapidemics, right now, is only built by us, high schoolers; so the medical knowledge is not exactly very precise. A next step would be to further enhance the diagnosis steps in our project.
 As well, currently, we are using firebase and everything is on one server; we can get a server for each hospital that uses it.
 We plan to start in our local community by starting in smaller hospitals and working our way up.
 
